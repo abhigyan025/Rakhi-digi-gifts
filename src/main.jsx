@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
+const MYRA_PHOTO =
+  "https://cdn.phototourl.com/free/2026-08-28-068472b3-038b-44ff-85c6-79f21555f6b2.jpg";
+
 const memories = [
   {
     title: "The chaos",
@@ -20,10 +23,7 @@ const memories = [
 function isMyra(name) {
   const normalized = name.trim().toLowerCase().replace(/\s+/g, " ");
 
-  return (
-    normalized === "myra" ||
-    normalized === "myra atul"
-  );
+  return normalized === "myra" || normalized === "myra atul";
 }
 
 function App() {
@@ -87,8 +87,8 @@ function App() {
         <div className="glow glow-one" />
         <div className="glow glow-two" />
 
-        {/* NAME SCREEN */}
-        {!started ? (
+        {/* NAME ENTRY */}
+        {!started && (
           <div className="intro">
             <p className="eyebrow">
               a very important digital delivery
@@ -131,8 +131,10 @@ function App() {
               yes, this is important. don't overthink it.
             </p>
           </div>
-        ) : !opened ? (
-          /* GREETING SCREEN */
+        )}
+
+        {/* GREETING */}
+        {started && !opened && (
           <div className="intro">
             <p className="eyebrow">
               delivery successful ✓
@@ -161,17 +163,26 @@ function App() {
               yes, you actually have to click it
             </p>
           </div>
-        ) : myraMode ? (
-          /* =========================
-             MYRA EXPERIENCE
-             ========================= */
+        )}
+
+        {/* MYRA */}
+        {opened && myraMode && (
           <div className="gift-content">
             <p className="eyebrow">
               this one's for you ✓
             </p>
 
-            <h1>
-              For <span>{name}.</span>
+            <div className="recipient-photo">
+              <img
+                src={MYRA_PHOTO}
+                alt="The gift recipient"
+              />
+            </div>
+
+            <h1 className="recipient-title">
+              For <span>Myra Dih-Dih</span>
+              <br />
+              <small>😋✌🏻</small>
             </h1>
 
             <div className="card">
@@ -226,13 +237,8 @@ function App() {
               </p>
 
               <div className="signature">
-                <span>
-                  Anyway...
-                </span>
-
-                <strong>
-                  ✦
-                </strong>
+                <span>Anyway...</span>
+                <strong>✦</strong>
               </div>
 
               <div className="letter-sign">
@@ -263,10 +269,10 @@ function App() {
               </p>
             </div>
           </div>
-        ) : (
-          /* =========================
-             OTHER RECIPIENTS
-             ========================= */
+        )}
+
+        {/* EVERYONE ELSE */}
+        {opened && !myraMode && (
           <div className="gift-content">
             <p className="eyebrow">
               oh... 💔
@@ -305,20 +311,15 @@ function App() {
               </p>
 
               <div className="signature">
-                <span>
-                  maybe next time 😭
-                </span>
-
-                <strong>
-                  ✦
-                </strong>
+                <span>maybe next time 😭</span>
+                <strong>✦</strong>
               </div>
             </div>
           </div>
         )}
       </section>
 
-      {/* MYRA EXTRA LETTER */}
+      {/* EXTRA MYRA LETTER */}
       {showLetter && myraMode && (
         <div
           className="modal-backdrop"
@@ -356,8 +357,7 @@ function App() {
             </p>
 
             <p>
-              Now close this before this gets embarrassing.
-              😭
+              Now close this before this gets embarrassing. 😭
             </p>
 
             <div className="letter-sign">
