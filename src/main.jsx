@@ -13,11 +13,13 @@ const memories = [
   },
   {
     title: "The nonsense",
-    text: "Our shared ability to discuss exes, crushes, random drama and absolutely nothing important deserves its own documentary.",
+    text: "Our shared ability to discuss everything and absolutely nothing important deserves its own documentary.",
   },
 ];
 
 function App() {
+  const [name, setName] = useState("");
+  const [started, setStarted] = useState(false);
   const [opened, setOpened] = useState(false);
   const [memoryIndex, setMemoryIndex] = useState(0);
   const [showLetter, setShowLetter] = useState(false);
@@ -35,13 +37,21 @@ function App() {
           id,
           left: Math.random() * 100,
           duration: 4 + Math.random() * 3,
-          delay: Math.random() * 0.5,
         },
       ]);
     }, 700);
 
     return () => clearInterval(interval);
   }, [opened]);
+
+  const continueToGift = () => {
+    const cleanName = name.trim();
+
+    if (!cleanName) return;
+
+    setName(cleanName);
+    setStarted(true);
+  };
 
   const nextMemory = () => {
     setMemoryIndex((current) => (current + 1) % memories.length);
@@ -56,29 +66,69 @@ function App() {
           style={{
             left: `${heart.left}%`,
             animationDuration: `${heart.duration}s`,
-            animationDelay: `${heart.delay}s`,
           }}
         >
           ♥
         </span>
       ))}
 
-      <section className={`hero ${opened ? "opened" : ""}`}>
+      <section className="hero">
         <div className="glow glow-one" />
         <div className="glow glow-two" />
 
-        {!opened ? (
+        {!started ? (
           <div className="intro">
             <p className="eyebrow">a very important digital delivery</p>
 
             <h1>
-              Hey,
+              A little
               <br />
-              <span>Myra.</span>
+              <span>something.</span>
             </h1>
 
             <p className="subtitle">
-              I made you something.
+              Before we begin...
+              <br />
+              who is this gift for?
+            </p>
+
+            <form
+              className="name-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                continueToGift();
+              }}
+            >
+              <input
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Your name..."
+                maxLength={30}
+                autoComplete="off"
+                aria-label="Your name"
+              />
+
+              <button type="submit" className="open-button">
+                Continue ✨
+              </button>
+            </form>
+
+            <p className="tiny-note">
+              yes, this is important. don't overthink it.
+            </p>
+          </div>
+        ) : !opened ? (
+          <div className="intro">
+            <p className="eyebrow">delivery successful ✓</p>
+
+            <h1>
+              Hey,
+              <br />
+              <span>{name}.</span>
+            </h1>
+
+            <p className="subtitle">
+              Someone made this for you.
               <br />
               Don't judge the presentation.
             </p>
@@ -87,14 +137,16 @@ function App() {
               Open your gift ✨
             </button>
 
-            <p className="tiny-note">yes, you actually have to click it</p>
+            <p className="tiny-note">
+              yes, you actually have to click it
+            </p>
           </div>
         ) : (
           <div className="gift-content">
-            <p className="eyebrow">delivery successful ✓</p>
+            <p className="eyebrow">this one's for you ✓</p>
 
             <h1>
-              For <span>Myra.</span>
+              For <span>{name}.</span>
             </h1>
 
             <div className="card">
@@ -103,15 +155,14 @@ function App() {
               <h2>A tiny appreciation post</h2>
 
               <p>
-                We've known each other for roughly a year-ish, which is
-                simultaneously not that long and somehow enough time for an
+                We've probably known each other long enough for a completely
                 unreasonable amount of chaos.
               </p>
 
               <p>
-                You're kind, jolly, chaotic, and somehow always perfectly
-                capable of matching the vibe. And honestly, you've supported me
-                through more things than you probably realise.
+                You're kind, hilarious, chaotic, and somehow always capable of
+                matching the vibe. And honestly, you've probably helped me
+                through more things than you realise.
               </p>
 
               <p>
@@ -160,7 +211,7 @@ function App() {
             <p className="eyebrow">one last thing</p>
 
             <h2>
-              To my <span>Myra Dih-Dih</span> 😭✌🏻
+              To my <span>{name}</span> 😭✌🏻
             </h2>
 
             <p>
@@ -175,12 +226,10 @@ function App() {
               nonsense in between.
             </p>
 
-            <p>
-              Stay exactly as wonderfully chaotic as you are.
-            </p>
+            <p>Stay exactly as wonderfully chaotic as you are.</p>
 
             <div className="letter-sign">
-              Myra Dih-Dih 😭✌🏻
+              {name} 😭✌🏻
             </div>
           </div>
         </div>
