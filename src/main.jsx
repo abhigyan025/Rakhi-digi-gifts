@@ -9,13 +9,22 @@ const memories = [
   },
   {
     title: "The support",
-    text: "You've been there for me more times than I can properly count, and I genuinely don't think I say thank you enough.",
+    text: "You've been there for me more times than I can properly count, and you've supported me through some genuinely emotional moments.",
   },
   {
     title: "The nonsense",
-    text: "Our shared ability to discuss everything and absolutely nothing important deserves its own documentary.",
+    text: "From exes and crushes to random gossip, roasting each other and absolute nonsense, there has genuinely never been a shortage of chaos.",
   },
 ];
+
+function isMyra(name) {
+  const normalized = name.trim().toLowerCase().replace(/\s+/g, " ");
+
+  return (
+    normalized === "myra" ||
+    normalized === "myra atul"
+  );
+}
 
 function App() {
   const [name, setName] = useState("");
@@ -24,6 +33,8 @@ function App() {
   const [memoryIndex, setMemoryIndex] = useState(0);
   const [showLetter, setShowLetter] = useState(false);
   const [hearts, setHearts] = useState([]);
+
+  const myraMode = isMyra(name);
 
   useEffect(() => {
     if (!opened) return;
@@ -76,9 +87,12 @@ function App() {
         <div className="glow glow-one" />
         <div className="glow glow-two" />
 
+        {/* NAME SCREEN */}
         {!started ? (
           <div className="intro">
-            <p className="eyebrow">a very important digital delivery</p>
+            <p className="eyebrow">
+              a very important digital delivery
+            </p>
 
             <h1>
               A little
@@ -118,8 +132,11 @@ function App() {
             </p>
           </div>
         ) : !opened ? (
+          /* GREETING SCREEN */
           <div className="intro">
-            <p className="eyebrow">delivery successful ✓</p>
+            <p className="eyebrow">
+              delivery successful ✓
+            </p>
 
             <h1>
               Hey,
@@ -133,7 +150,10 @@ function App() {
               Don't judge the presentation.
             </p>
 
-            <button className="open-button" onClick={() => setOpened(true)}>
+            <button
+              className="open-button"
+              onClick={() => setOpened(true)}
+            >
               Open your gift ✨
             </button>
 
@@ -141,38 +161,82 @@ function App() {
               yes, you actually have to click it
             </p>
           </div>
-        ) : (
+        ) : myraMode ? (
+          /* =========================
+             MYRA EXPERIENCE
+             ========================= */
           <div className="gift-content">
-            <p className="eyebrow">this one's for you ✓</p>
+            <p className="eyebrow">
+              this one's for you ✓
+            </p>
 
             <h1>
               For <span>{name}.</span>
             </h1>
 
             <div className="card">
-              <div className="card-decoration">✦</div>
+              <div className="card-decoration">
+                ✦
+              </div>
 
-              <h2>A tiny appreciation post</h2>
+              <h2>
+                For Myra Dih-Dih 😋✌🏻
+              </h2>
 
               <p>
-                We've probably known each other long enough for a completely
-                unreasonable amount of chaos.
+                Okay, so somehow it’s already been a year-ish of
+                knowing you, which is honestly both surprising and
+                concerning. In that time, you’ve somehow managed to
+                be chalant, kind, annoying, comforting, and an
+                absolutely reliable partner in whatever random
+                nonsense we happen to be discussing that day.
               </p>
 
               <p>
-                You're kind, hilarious, chaotic, and somehow always capable of
-                matching the vibe. And honestly, you've probably helped me
-                through more things than you realise.
+                From our completely unnecessary discussions about
+                exes and crushes to random gossip, roasting each
+                other, sending stupid stuff, and just talking
+                absolute nonsense, there has genuinely never been a
+                shortage of chaos. And somehow, that’s exactly what
+                makes our friendship so fun.
               </p>
 
               <p>
-                So here's your extremely unnecessary but completely deserved
-                digital gift.
+                But jokes aside, I really do appreciate you. You’ve
+                supported me through some genuinely emotional
+                moments, and you’ve been there for me a hell of a lot
+                more times than you probably realise. I might not
+                always say it properly, because obviously being
+                sincere for more than twelve seconds would destroy
+                my reputation, but it actually means a lot to me.
+              </p>
+
+              <p>
+                So yeah, this is basically a ridiculously elaborate
+                way of saying: thank you for being you, thank you
+                for putting up with me, and thank you for making the
+                past year considerably more chaotic and considerably
+                better.
+              </p>
+
+              <p>
+                Stay annoying. Stay kind. Stay chalant. And please
+                never become normal because that would be deeply
+                disappointing.
               </p>
 
               <div className="signature">
-                <span>from your favourite idiot</span>
-                <strong>✦</strong>
+                <span>
+                  Anyway...
+                </span>
+
+                <strong>
+                  ✦
+                </strong>
+              </div>
+
+              <div className="letter-sign">
+                Bilautaji Ki Unofficial Malkin!!! 😋✌🏻
               </div>
             </div>
 
@@ -181,21 +245,85 @@ function App() {
                 There's more 👀
               </button>
 
-              <button className="secondary" onClick={nextMemory}>
+              <button
+                className="secondary"
+                onClick={nextMemory}
+              >
                 Random memory
               </button>
             </div>
 
             <div className="memory-card">
-              <span>{memories[memoryIndex].title}</span>
-              <p>{memories[memoryIndex].text}</p>
+              <span>
+                {memories[memoryIndex].title}
+              </span>
+
+              <p>
+                {memories[memoryIndex].text}
+              </p>
+            </div>
+          </div>
+        ) : (
+          /* =========================
+             OTHER RECIPIENTS
+             ========================= */
+          <div className="gift-content">
+            <p className="eyebrow">
+              oh... 💔
+            </p>
+
+            <h1>
+              Aww,
+              <br />
+              <span>{name}.</span>
+            </h1>
+
+            <div className="card">
+              <div className="card-decoration">
+                ✦
+              </div>
+
+              <h2>
+                Wait... 😭
+              </h2>
+
+              <p>
+                Aww 💔 I'm sorry, I guess I forgot to include you
+                in this one.
+              </p>
+
+              <p>
+                Still, I hope you have an absolutely wonderful
+                Rakhi and a day full of happiness, laughter and
+                good vibes.
+              </p>
+
+              <p>
+                <strong>
+                  Happiest Rakhi to you! ❤️
+                </strong>
+              </p>
+
+              <div className="signature">
+                <span>
+                  maybe next time 😭
+                </span>
+
+                <strong>
+                  ✦
+                </strong>
+              </div>
             </div>
           </div>
         )}
       </section>
 
-      {showLetter && (
-        <div className="modal-backdrop" onClick={() => setShowLetter(false)}>
+      {/* MYRA EXTRA LETTER */}
+      {showLetter && myraMode && (
+        <div
+          className="modal-backdrop"
+          onClick={() => setShowLetter(false)}
+        >
           <div
             className="letter"
             onClick={(event) => event.stopPropagation()}
@@ -208,28 +336,32 @@ function App() {
               ×
             </button>
 
-            <p className="eyebrow">one last thing</p>
+            <p className="eyebrow">
+              one last thing
+            </p>
 
             <h2>
-              To my <span>{name}</span> 😭✌🏻
+              To my <span>Myra Dih-Dih</span> 😭✌🏻
             </h2>
 
             <p>
-              I could make this extremely emotional, but then we'd both have
-              to acknowledge feelings, and frankly I don't think either of us
-              is prepared for that level of responsibility.
+              Okay, fine. One slightly more sincere moment.
             </p>
 
             <p>
-              Just know that I genuinely appreciate you. For the laughs, the
-              chaos, the conversations, the support, and all the random
-              nonsense in between.
+              I genuinely appreciate having you around. For the
+              laughs, the chaos, the conversations, the support,
+              and all the completely unnecessary nonsense in
+              between.
             </p>
 
-            <p>Stay exactly as wonderfully chaotic as you are.</p>
+            <p>
+              Now close this before this gets embarrassing.
+              😭
+            </p>
 
             <div className="letter-sign">
-              {name} 😭✌🏻
+              Myra Dih-Dih 😋✌🏻
             </div>
           </div>
         </div>
